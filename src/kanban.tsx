@@ -65,24 +65,31 @@ const TaskManagementApp: React.FC = () => {
     return columns.map((column) => (
       <div
         key={column.id}
-        className={styles["column"]}
+        className={`${styles["column"]} rounded-lg bg-white p-4 shadow-md sm:p-6 md:p-8`}
         id={column.id}
         onDrop={(event) => handleDrop(event, column.id)}
         onDragOver={(event) => handleDragOver(event)}
       >
-        <h2>{column.name}</h2>
-        <hr />
+        <h2 className="mb-4 text-lg font-bold">{column.name}</h2>
+        <hr className="mb-4" />
         {projects
           .filter((project) => project.status === column.id)
           .map((project) => (
             <div
               key={project.id}
-              className="project"
+              className="project mb-4 rounded-md bg-gray-100 p-4 shadow-sm"
               draggable
               onDragStart={(e) => handleDragStart(e, project)}
             >
-              {project.title}
-              <button onClick={() => deleteProject(project.id)}>Delete</button>
+              <h3 className="text-md mb-2 font-medium">{project.title}</h3>
+              <div className="flex justify-end">
+                <button
+                  className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+                  onClick={() => deleteProject(project.id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
       </div>

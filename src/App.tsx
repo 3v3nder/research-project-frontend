@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />}></Route>
+        <Route path="/" element={<TaskManagementApp />}></Route>
         <Route
           path="/projectmanagementview"
           element={<TaskManagementApp />}

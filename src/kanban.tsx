@@ -7,7 +7,7 @@ import TopNav from "./Components/TopNav";
 import TaskModal from "./Components/EditModal";
 import { Link, useParams } from "react-router-dom";
 import { BiCalendarEvent, BiNotepad, BiUser } from "react-icons/bi";
-
+import Modals from "./Components/Modals";
 // Define the project interface
 interface Project {
   id: number;
@@ -581,6 +581,7 @@ hover:scale-105
         </div>
       )}
       <div className={styles["task-management-app"]}>
+        <Modals />
         <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3`}>
           {renderProjects()}
         </div>

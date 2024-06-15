@@ -465,8 +465,9 @@ hover:scale-105
 
   return (
     <TopNav>
-      <button
-        className={`
+      <div className="flex justify-start gap-2">
+        <button
+          className={`
                 rounded
                 bg-gradient-to-r
                 from-[#4da890]
@@ -479,39 +480,39 @@ hover:scale-105
                 duration-300
                 hover:scale-105
               `}
-        onClick={() => setShowModal(true)}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+          onClick={() => setShowModal(true)}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
-        Add Researcher
-      </button>
-      {showModal && (
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
-              <h2 className="mb-4 text-2xl font-bold">Add Researcher</h2>
-              <input
-                type="text"
-                placeholder="Researcher Name"
-                className="mb-4 w-full rounded-md border border-gray-300 p-2"
-                value={newResearcherName}
-                onChange={(e) => setNewResearcherName(e.target.value)}
-              />
-              <div className="flex justify-end">
-                <button
-                  className={`
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          Add Researcher
+        </button>
+        {showModal && (
+          <div className="fixed inset-0 z-10 overflow-y-auto">
+            <div className="flex min-h-screen items-center justify-center">
+              <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+                <h2 className="mb-4 text-2xl font-bold">Add Researcher</h2>
+                <input
+                  type="text"
+                  placeholder="Researcher Name"
+                  className="mb-4 w-full rounded-md border border-gray-300 p-2"
+                  value={newResearcherName}
+                  onChange={(e) => setNewResearcherName(e.target.value)}
+                />
+                <div className="flex justify-end">
+                  <button
+                    className={`
                         rounded
                         bg-gradient-to-r
                         from-[#4da890]
@@ -524,26 +525,26 @@ hover:scale-105
                         duration-300
                         hover:scale-105
                       `}
-                  onClick={addResearcher}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    onClick={addResearcher}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                  </svg>
-                  Add
-                </button>
-                <button
-                  className={`
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                    Add
+                  </button>
+                  <button
+                    className={`
                         ml-2
                         rounded
                         bg-gradient-to-r
@@ -557,31 +558,34 @@ hover:scale-105
                         duration-300
                         hover:scale-105
                       `}
-                  onClick={() => setShowModal(false)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    onClick={() => setShowModal(false)}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                  Cancel
-                </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-      <div className={styles["task-management-app"]}>
+        )}
+
         <Modals />
+      </div>
+
+      <div className={styles["task-management-app"]}>
         <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3`}>
           {renderProjects()}
         </div>

@@ -1,6 +1,6 @@
 "use client";
 import { Button, Modal, Checkbox } from "flowbite-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios, { AxiosResponse } from "axios";
@@ -34,6 +34,21 @@ function Modals(props: any) {
   const [selectedResearchers, setSelectedResearchers] = useState<Researcher[]>(
     [],
   );
+  const [researchers, setResearchers] = useState<Researcher[]>([]);
+
+  useEffect(() => {
+    const fetchResearchers = async () => {
+      try {
+        const response: AxiosResponse<Researcher[]> = await axios.get(
+          "http://localhost:3000/researcher",
+        );
+        setResearchers(response.data);
+      } catch (error) {
+        console.error("Error fetching researchers:", error);
+      }
+    };
+    fetchResearchers();
+  }, []);
 
   const initialValues: Project = {
     title: "",
@@ -72,12 +87,6 @@ function Modals(props: any) {
       setSelectedResearchers([...selectedResearchers, researcher]);
     }
   };
-
-  const researchers: Researcher[] = [
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Smith" },
-    { id: 3, name: "Bob Johnson" },
-  ];
 
   return (
     <>

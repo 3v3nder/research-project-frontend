@@ -13,9 +13,9 @@ interface Project {
   status: string;
   dueDate: string;
   notes: string;
-  researchFindings: string | null;
+  researchFindings: string[] | null;
   tasks: string | null;
-  researchers: string | null;
+  researcherNames: string[] | null;
 }
 
 // Define the column interface

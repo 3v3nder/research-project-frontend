@@ -20,7 +20,7 @@ const validationSchema = Yup.object({
   dueDate: Yup.date().required("Due date is required"),
   notes: Yup.string().optional(),
   status: Yup.string()
-    .oneOf(["todo", "in-progress", "done"])
+    .oneOf(["planning", "in-progress", "completed"])
     .required("Status is required"),
   project: Yup.number().required("Project is required"),
 });
@@ -86,9 +86,9 @@ function TaskModal({ task, projectId, onTaskSaved }: TaskModalProps) {
             <Field name="dueDate" type="date" />
             <Field name="notes" as="textarea" type="text" placeholder="Notes" />
             <Field name="status" as="select">
-              <option value="todo">Todo</option>
+              <option value="planning">Planning</option>
               <option value="in-progress">In Progress</option>
-              <option value="done">Done</option>
+              <option value="completed">Completed</option>
             </Field>
             <button
               className="focus:shadow-outline rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"

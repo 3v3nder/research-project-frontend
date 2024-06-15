@@ -1,22 +1,31 @@
 "use client";
 import { Button, Modal, Checkbox } from "flowbite-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios, { AxiosResponse } from "axios";
 
 interface Project {
+  id: number;
   title: string;
   description: string;
   dueDate: string;
   notes: string;
   status: string;
+  researchFindings?: string[] | null;
+  tasks?: string | null;
   researcherNames: string[];
 }
 
 interface Researcher {
   id: number;
   name: string;
+}
+
+interface ProjectModalProps {
+  project: Project;
+  projectId?: string;
+  onTaskSaved?: () => void;
 }
 
 const validationSchema = Yup.object({
@@ -29,35 +38,45 @@ const validationSchema = Yup.object({
     .required("Status is required"),
 });
 
-function Modals(props: any) {
+function Modals({ project, projectId, onTaskSaved }: ProjectModalProps) {
   const [openModal, setOpenModal] = useState(false);
   const [selectedResearchers, setSelectedResearchers] = useState<Researcher[]>(
     [],
   );
 
+  useEffect(() => {
+    setOpenModal(true);
+  }, [project]);
+
+  function convertDateFormat(dateString: string): string {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+
   const initialValues: Project = {
-    title: "",
-    description: "",
-    dueDate: "",
-    notes: "",
-    status: "planning",
-    researcherNames: [],
+    id: project.id,
+    title: project.title,
+    description: project.description,
+    dueDate: convertDateFormat(project.dueDate),
+    notes: project.notes,
+    status: project.status,
+    researcherNames: project.researcherNames,
   };
 
   const handleSubmit = async (values: Project) => {
+    console.log("check here");
     try {
-      const projectData: Project = {
-        ...values,
-        researcherNames: selectedResearchers.map(
-          (researcher) => researcher.name,
-        ),
-      };
-      const response: AxiosResponse<Project> = await axios.post(
-        "http://localhost:3000/projects",
-        projectData,
+      const response: AxiosResponse<Project> = await axios.patch(
+        `http://localhost:3000/projects/${values.id}`,
+        values,
       );
       console.log("Project created:", response.data);
       setOpenModal(false);
+      onTaskSaved?.();
     } catch (error) {
       console.error("Error creating project:", error);
     }
@@ -83,7 +102,7 @@ function Modals(props: any) {
     <>
       <Button onClick={() => setOpenModal(true)}>Add Project</Button>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>Add Project</Modal.Header>
+        <Modal.Header>Edit Project</Modal.Header>
         <Modal.Body>
           <Formik
             initialValues={initialValues}
@@ -123,7 +142,7 @@ function Modals(props: any) {
                 className="focus:shadow-outline rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
                 type="submit"
               >
-                Create Project
+                Edit Project
               </button>
             </Form>
           </Formik>

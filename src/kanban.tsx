@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import styles from "./kanban.module.css";
-
+import SweetAlert2 from "react-sweetalert2";
+import Swal, { SweetAlertResult } from "sweetalert2";
 import TopNav from "./Components/TopNav";
 
 // Define the project interface
@@ -14,6 +15,7 @@ interface Project {
   notes: string;
   researchFindings: string | null;
   tasks: string | null;
+  researchers: string | null;
 }
 
 // Define the column interface
@@ -70,21 +72,23 @@ const TaskManagementApp: React.FC = () => {
         onDrop={(event) => handleDrop(event, column.id)}
         onDragOver={(event) => handleDragOver(event)}
       >
-        <h2 className="mb-4 text-lg font-bold">{column.name}</h2>
-        <hr className="mb-4" />
+        <h2 className="mb-4 text-lg font-bold text-[#4da890]">{column.name}</h2>
+        <hr className="mb-4 border-[#4da890]" />
         {projects
           .filter((project) => project.status === column.id)
           .map((project) => (
             <div
               key={project.id}
-              className="project mb-4 rounded-md bg-gray-100 p-4 shadow-sm"
+              className="project mb-4 rounded-md bg-[#fdf3e6] p-4 shadow-sm"
               draggable
               onDragStart={(e) => handleDragStart(e, project)}
             >
-              <h3 className="text-md mb-2 font-medium">{project.title}</h3>
+              <h3 className="text-md mb-2 font-medium text-[#212529]">
+                {project.title}
+              </h3>
               <div className="flex justify-end">
                 <button
-                  className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+                  className="rounded bg-[#4da890] px-4 py-2 font-bold text-white hover:bg-[#3b8372]"
                   onClick={() => deleteProject(project.id)}
                 >
                   Delete
@@ -96,42 +100,69 @@ const TaskManagementApp: React.FC = () => {
     ));
   };
 
-  const addProject = async (columnId: string) => {
-    const projectTitleInput = document.getElementById(
-      "projectTitleInput",
-    ) as HTMLInputElement;
-    const projectTitle = projectTitleInput.value.trim();
-    if (projectTitle !== "") {
-      const newProject: Project = {
-        id: projects.length + 1,
-        title: projectTitle,
-        description: "",
-        status: "todo", // Set the initial status to the columnId
-        dueDate: "",
-        notes: "",
-        researchFindings: null,
-        tasks: null,
-      };
+  // const addProject = async (columnId: string) => {
+  //   const projectTitleInput = document.getElementById(
+  //     "projectTitleInput",
+  //   ) as HTMLInputElement;
+  //   const projectTitle = projectTitleInput.value.trim();
+  //   if (projectTitle !== "") {
+  //     const newProject: Project = {
+  //       id: projects.length + 1,
+  //       title: projectTitle,
+  //       description: "",
+  //       status: "todo", // Set the initial status to the columnId
+  //       dueDate: "",
+  //       notes: "",
+  //       researchFindings: null,
+  //       tasks: null,
+  //     };
 
-      try {
-        const response: AxiosResponse<Project> = await axios.post(
-          "http://localhost:3000/projects",
-          newProject,
-        );
-        setProjects([...projects, response.data]);
-        projectTitleInput.value = "";
-      } catch (error) {
-        console.error("Error adding project:", error);
-      }
-    }
-  };
+  //     try {
+  //       const response: AxiosResponse<Project> = await axios.post(
+  //         "http://localhost:3000/projects",
+  //         newProject,
+  //       );
+  //       setProjects([...projects, response.data]);
+  //       projectTitleInput.value = "";
+  //     } catch (error) {
+  //       console.error("Error adding project:", error);
+  //     }
+  //   }
+  // };
+
+  // const deleteProject = async (projectId: number) => {
+  //   try {
+  //     await axios.delete(`http://localhost:3000/projects/${projectId}`);
+  //     setProjects(projects.filter((project) => project.id !== projectId));
+  //   } catch (error) {
+  //     console.error("Error deleting project:", error);
+  //   }
+  // };
 
   const deleteProject = async (projectId: number) => {
-    try {
-      await axios.delete("http://localhost:3000/projects/${projectId}");
-      setProjects(projects.filter((project) => project.id !== projectId));
-    } catch (error) {
-      console.error("Error deleting project:", error);
+    const result: SweetAlertResult<any> = await Swal.fire({
+      title: "Are you sure?",
+      text: "You wont be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:3000/projects/${projectId}`);
+        setProjects(projects.filter((project) => project.id !== projectId));
+        await Swal.fire("Deleted!", "The project has been deleted.", "success");
+      } catch (error) {
+        console.error("Error deleting project:", error);
+        await Swal.fire(
+          "Error!",
+          "There was an error deleting the project.",
+          "error",
+        );
+      }
     }
   };
 

@@ -14,6 +14,7 @@ interface Task {
 
 function Board(props: any) {
   const { projectId } = useParams();
+
   let config = {
     method: "get",
     maxBodyLength: Infinity,

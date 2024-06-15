@@ -59,7 +59,12 @@ function Modals(props: any) {
               <Field name="title" type="text" placeholder="Title" />
               <Field name="description" type="text" placeholder="Description" />
               <Field name="dueDate" type="date" />
-              <Field name="notes" type="text" placeholder="Notes" />
+              <Field
+                as="textarea"
+                name="notes"
+                type="text"
+                placeholder="Notes"
+              />
               <Field name="status" as="select">
                 <option value="todo">Todo</option>
                 <option value="in-progress">In Progress</option>

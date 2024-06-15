@@ -35,7 +35,7 @@ function TaskModal(props: any) {
     dueDate: "",
     notes: "",
     status: "todo",
-    project: 0,
+    project: props.projectId,
   };
 
   const handleSubmit = async (values: Task) => {
@@ -72,7 +72,6 @@ function TaskModal(props: any) {
                 <option value="in-progress">In Progress</option>
                 <option value="done">Done</option>
               </Field>
-              <Field name="project" type="number" placeholder="Project ID" />
               <button
                 className="focus:shadow-outline rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
                 type="submit"

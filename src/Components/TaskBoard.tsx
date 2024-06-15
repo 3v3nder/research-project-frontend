@@ -2,6 +2,7 @@ import * as React from "react";
 import Modals from "./TaskModal";
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
+
 interface Task {
   id: number;
   title: string;
@@ -14,6 +15,7 @@ interface Task {
 
 function Board(props: any) {
   const { projectId } = useParams();
+  console.log(`ProjectID: ${projectId}`);
   let config = {
     method: "get",
     maxBodyLength: Infinity,
@@ -37,7 +39,7 @@ function Board(props: any) {
   return (
     <div className="flex flex-col">
       <div className="p-2">
-        <Modals />
+        <Modals projectId={projectId} />
       </div>
     </div>
   );

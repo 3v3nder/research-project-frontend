@@ -6,9 +6,6 @@ import SideBar from "./SideBar";
 function TopNav(props: any) {
   return (
     <div className="flex flex-row dark:bg-gray-700 dark:text-gray-400">
-      <div>
-        <SideBar />
-      </div>
       <div className="w-full gap-4 p-3">
         <div className="h-100 w-100 mx-auto flex items-center justify-center rounded-full bg-[#fdf3e6]">
           <img

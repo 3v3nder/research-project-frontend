@@ -61,9 +61,35 @@ function Dashboard() {
         <div className="p-2">
           <Modals />
           <button
-            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            className={`
+                rounded
+                bg-gradient-to-r
+                from-[#4da890]
+                to-[#3b8372]
+                px-4
+                py-2
+                font-bold
+                text-white
+                transition-transform
+                duration-300
+                hover:scale-105
+              `}
             onClick={() => setShowModal(true)}
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
             Add Researcher
           </button>
           {showModal && (
@@ -80,15 +106,68 @@ function Dashboard() {
                   />
                   <div className="flex justify-end">
                     <button
-                      className="mr-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                      className={`
+                        rounded
+                        bg-gradient-to-r
+                        from-[#4da890]
+                        to-[#3b8372]
+                        px-4
+                        py-2
+                        font-bold
+                        text-white
+                        transition-transform
+                        duration-300
+                        hover:scale-105
+                      `}
                       onClick={addResearcher}
                     >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
                       Add
                     </button>
                     <button
-                      className="rounded bg-gray-500 px-4 py-2 font-bold text-white hover:bg-gray-700"
+                      className={`
+                        ml-2
+                        rounded
+                        bg-gradient-to-r
+                        from-[#4da890]
+                        to-[#3b8372]
+                        px-4
+                        py-2
+                        font-bold
+                        text-white
+                        transition-transform
+                        duration-300
+                        hover:scale-105
+                      `}
                       onClick={() => setShowModal(false)}
                     >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
                       Cancel
                     </button>
                   </div>

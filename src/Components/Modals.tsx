@@ -48,7 +48,7 @@ function Modals(props: any) {
       }
     };
     fetchResearchers();
-  }, []);
+  }, [researchers]);
 
   const initialValues: Project = {
     title: "",
